@@ -2,6 +2,7 @@
 set -euxo pipefail
 
 # Ensure nginx can work with the /data dir
-chown -R nginx: /data
+chown -R http /data
+chgrp -R http /data
 
 exec nginx -g "daemon off;"
