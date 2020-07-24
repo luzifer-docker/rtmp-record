@@ -16,18 +16,18 @@ ENV SKIP_VERIFY=true
 RUN set -ex \
  && pacman -Syu --noconfirm nginx \
  && /usr/local/bin/run.sh "https://aur.archlinux.org/nginx-mod-rtmp.git" \
- && cp git/nginx-mod-rtmp-*.pkg.tar.xz /tmp/nginx-mod-rtmp.pkg.tar.xz
+ && cp git/nginx-mod-rtmp-*.pkg.tar.zst /tmp/nginx-mod-rtmp.pkg.tar.zst
 
 
 FROM luzifer/archlinux:latest
 
-COPY --from=aur   /tmp/nginx-mod-rtmp.pkg.tar.xz      /tmp/
+COPY --from=aur   /tmp/nginx-mod-rtmp.pkg.tar.zst /tmp/
 
 RUN set -ex \
  && pacman -Syu --noconfirm \
       bash \
       nginx \
- && pacman -U --noconfirm /tmp/nginx-mod-rtmp.pkg.tar.xz
+ && pacman -U --noconfirm /tmp/nginx-mod-rtmp.pkg.tar.zst
 
 COPY --from=fetch /tmp/dumb-init                      /usr/local/bin/
 COPY              docker-entrypoint.sh                /usr/local/bin/
